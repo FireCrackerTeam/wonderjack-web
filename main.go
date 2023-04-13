@@ -5,10 +5,12 @@ import (
 	"net/http"
 
 	"github.com/FireCrackerTeam/wonderjack-web/controllers/authcontroller"
+	"github.com/FireCrackerTeam/wonderjack-web/models"
 	"github.com/gorilla/mux"
 )
 
 func main(){
+	models.ConnectDatabase()
 	r := mux.NewRouter()
 
 	r.HandleFunc("/login", authcontroller.Login).Methods("POST")

@@ -49,6 +49,7 @@ func Login(w http.ResponseWriter, r *http.Request){
 	// create jwt token
 	expTime := time.Now().Add(time.Hour * 1)
 	claims := &config.JWTClaim {
+		UserId: user.UserId,
 		Email: user.UserEmail,
 		RegisteredClaims: jwt.RegisteredClaims {
 			Issuer: "wonderjack-web",

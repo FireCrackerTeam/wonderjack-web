@@ -103,7 +103,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	expTime := time.Now().Add(time.Hour * 1)
+	expTime := time.Now().Add(time.Hour * 24 * 60)
 	claims := &config.JWTClaim {
 		UserId: userInput.UserId,
 		Email: userInput.UserEmail,

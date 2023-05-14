@@ -69,16 +69,25 @@ func ClaimRedemtionCode(w http.ResponseWriter, r *http.Request){
 	if availableCode != (models.AvailableCodes{}) {
 		// insert to database
 		if err := models.DB.Create(&codeInput).Error; err != nil {
-			response := map[string]string{"message": err.Error()}
+			response := map[string]string{
+				"success": "failed",
+				"message": err.Error(),
+			}
 			helper.ResponseJSON(w, http.StatusInternalServerError, response)
 			return
 		}
 	} else { // if redemption code unavailable
-		response := map[string]string{"message": "Redemption code unavailable"}
+		response := map[string]string{
+			"success": "failed",
+			"message": "Redemption code unavailable",
+		}
 		helper.ResponseJSON(w, http.StatusBadRequest, response)
 		return
 	}
 
-	response := map[string]string{"message": "Redemption code code successfully claimed!"}
+	response := map[string]string{
+		"success": "success",
+		"message": "Redemption code code successfully claimed!",
+	}
 	helper.ResponseJSON(w, http.StatusOK, response)
 }

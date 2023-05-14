@@ -49,6 +49,7 @@ func Login(w http.ResponseWriter, r *http.Request){
 	// create jwt token
 	expTime := time.Now().Add(time.Hour * 1)
 	claims := &config.JWTClaim {
+		UserId: user.UserId,
 		Email: user.UserEmail,
 		RegisteredClaims: jwt.RegisteredClaims {
 			Issuer: "wonderjack-web",
@@ -73,11 +74,14 @@ func Login(w http.ResponseWriter, r *http.Request){
 		HttpOnly: true,
 	})
 
-	response := map[string]string{"message": "login successful"}
+	response := map[string]string{
+		"message": "login successful",
+		"token": token,
+	}
 	helper.ResponseJSON(w, http.StatusOK, response)
 }
 
-func Register(w http.ResponseWriter, r *http.Request){
+func Register(w http.ResponseWriter, r *http.Request) {
 	// get json data
 	var userInput models.Users
 	decoder := json.NewDecoder(r.Body)
@@ -99,7 +103,37 @@ func Register(w http.ResponseWriter, r *http.Request){
 		return
 	}
 
-	response := map[string]string{"message": "success"}
+	expTime := time.Now().Add(time.Hour * 1)
+	claims := &config.JWTClaim {
+		UserId: userInput.UserId,
+		Email: userInput.UserEmail,
+		RegisteredClaims: jwt.RegisteredClaims {
+			Issuer: "wonderjack-web",
+			ExpiresAt: jwt.NewNumericDate(expTime),
+		},
+	}
+
+	// declare algorithm for signing
+	tokenAlgo := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+	// signed token
+	token, err := tokenAlgo.SignedString(config.JWT_KEY)
+	if err != nil {
+		response := map[string]string{"message": err.Error()}
+		helper.ResponseJSON(w, http.StatusInternalServerError, response)
+		return
+	}
+
+	http.SetCookie(w, &http.Cookie{
+		Name: "token",
+		Path: "/",
+		Value: token,
+		HttpOnly: true,
+	})
+
+	response := map[string]string{
+		"message": "success",
+		"token": token,
+	}
 	helper.ResponseJSON(w, http.StatusOK, response)
 }
 

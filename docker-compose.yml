@@ -1,0 +1,34 @@
+version: "3.9"
+
+services:
+  db:
+    container_name: "wonderjack_web"
+    platform: linux/amd64
+    build:
+      context: .
+      dockerfile: db.DockerFile
+    networks:
+      - default
+    restart: always
+    ports:
+      - "3306:3306"
+    env_file:
+      - db.env
+    volumes:
+      - mysql_data:/var/lib/mysql
+    command: --default-authentication-plugin=mysql_native_password
+  api:
+    container_name: "app"
+    build:
+      context: .
+      dockerfile: app.DockerFile
+    ports:
+      - "80:80"
+    depends_on:
+      - db
+    volumes:
+      - .:/app/
+networks:
+  default:
+volumes:
+  mysql_data:

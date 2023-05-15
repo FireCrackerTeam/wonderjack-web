@@ -14,7 +14,7 @@ var DB *gorm.DB
 const codeLength = 10
 
 func ConnectDatabase(){
-	db, err := gorm.Open(mysql.Open("root:@tcp(host.docker.internal:3306)/wonderjack_web"))
+	db, err := gorm.Open(mysql.Open("root:@tcp(localhost:3306)/wonderjack_web"))
 	if err != nil {
 		panic(err)
 	}

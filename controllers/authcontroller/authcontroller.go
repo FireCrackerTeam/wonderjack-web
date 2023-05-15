@@ -74,9 +74,22 @@ func Login(w http.ResponseWriter, r *http.Request){
 		HttpOnly: true,
 	})
 
+	var redemptionCode models.RedemptionCodes
+	models.DB.Where("user_id = ?", user.UserId).Find(&redemptionCode)
+	if redemptionCode != (models.RedemptionCodes{}) {
+		response := map[string]string{
+			"message": "login successful",
+			"token": token,
+			"redeem": "success",
+		}
+		helper.ResponseJSON(w, http.StatusOK, response)
+		return
+	}
+
 	response := map[string]string{
 		"message": "login successful",
 		"token": token,
+		"redeem": "failed",
 	}
 	helper.ResponseJSON(w, http.StatusOK, response)
 }

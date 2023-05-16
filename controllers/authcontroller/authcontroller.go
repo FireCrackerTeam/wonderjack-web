@@ -47,7 +47,7 @@ func Login(w http.ResponseWriter, r *http.Request){
 	}
 
 	// create jwt token
-	expTime := time.Now().Add(time.Hour * 1)
+	expTime := time.Now().Add(time.Hour * 24 * 60)
 	claims := &config.JWTClaim {
 		UserId: user.UserId,
 		Email: user.UserEmail,
@@ -77,20 +77,34 @@ func Login(w http.ResponseWriter, r *http.Request){
 	var redemptionCode models.RedemptionCodes
 	models.DB.Where("user_id = ?", user.UserId).Find(&redemptionCode)
 	if redemptionCode != (models.RedemptionCodes{}) {
-		response := map[string]string{
-			"message": "login successful",
+		// response := map[string]string{
+		// 	"message": "login successful",
+		// 	"user_id": user.userId,
+		// 	"token": token,
+		// 	"redeem": "success",
+		// }
+		response := map[string]interface{}{
+			"message": "Login Successful",
+			"user_id": user.UserId,
 			"token": token,
-			"redeem": "success",
+			"redeem": true,
 		}
 		helper.ResponseJSON(w, http.StatusOK, response)
 		return
 	}
 
-	response := map[string]string{
-		"message": "login successful",
+	// response := map[string]string{
+	// 	"message": "login successful",
+	// 	"token": token,
+	// 	"redeem": "failed",
+	// }
+	response := map[string]interface{}{
+		"message": "Login Successful",
+		"user_id": user.UserId,
 		"token": token,
-		"redeem": "failed",
+		"redeem": false,
 	}
+	
 	helper.ResponseJSON(w, http.StatusOK, response)
 }
 
@@ -143,10 +157,17 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		HttpOnly: true,
 	})
 
-	response := map[string]string{
-		"message": "success",
+	// response := map[string]string{
+	// 	"message": "success",
+	// 	"user_id": user.userId,
+	// 	"token": token,
+	// }
+	response := map[string]interface{}{
+		"message": "Register Successful",
+		"user_id": userInput.UserId,
 		"token": token,
 	}
+
 	helper.ResponseJSON(w, http.StatusOK, response)
 }
 

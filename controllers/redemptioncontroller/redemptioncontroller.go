@@ -8,26 +8,34 @@ import (
 	"github.com/FireCrackerTeam/wonderjack-web/models"
 )
 
+type TokenRequest struct {
+	Code string `json:"code"`
+	Token string `json:"token"`
+}
+
 func ClaimRedemtionCode(w http.ResponseWriter, r *http.Request){
 	//get redemption code from body
-	var codeInput models.RedemptionCodes
+	var tokenReq TokenRequest
 	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&codeInput); err != nil {
+	if err := decoder.Decode(&tokenReq); err != nil {
 		response := map[string]string{"message": err.Error()}
 		helper.ResponseJSON(w, http.StatusBadRequest, response)
 		return
 	}
+
 	defer r.Body.Close()
 
 	// get user id from token
-	userId, err := helper.JWTClaim(r)
+	userId, err := helper.JWTClaim(r, tokenReq.Token)
 	if err != nil {
 		response := map[string]string{"message": err.Error()}
 		helper.ResponseJSON(w, http.StatusBadRequest, response)
 		return
 	}
 
+	var codeInput models.RedemptionCodes
 	codeInput.UserId = userId
+	codeInput.Code = tokenReq.Code
 
 	// check if the redemption code has been used with current user
 	var redemptionCode models.RedemptionCodes
@@ -56,7 +64,7 @@ func ClaimRedemtionCode(w http.ResponseWriter, r *http.Request){
 	models.DB.Where("user_id = ?", codeInput.UserId).Find(&redemptionCode)
 	if redemptionCode != (models.RedemptionCodes{}) {
 		response := map[string]string{
-			"success": "success",
+			"success": "failed",
 			"message": "Already claimed before!",
 		}
 		helper.ResponseJSON(w, http.StatusBadRequest, response)

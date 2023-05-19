@@ -7,15 +7,17 @@ import (
 	"github.com/golang-jwt/jwt/v4"
 )
 
-func JWTClaim(r *http.Request) (int64, error){
+func JWTClaim(r *http.Request, token string) (int64, error){
 	// Retrieve the JWT token from the request header or form data
-	c, err := r.Cookie("token")
-		if err != nil {
-			return -1, err
-		}
+	// c, err := r.Cookie("token")
+	// 	if err != nil {
+	// 		return -1, err
+	// 	}
 
-	// get token value
-	tokenString := c.Value
+	// println(tokenReq.Token)
+
+	// // get token value
+	tokenString := token
 
 	claims := &config.JWTClaim{}
 	// parsing token jwt

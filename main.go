@@ -8,7 +8,6 @@ import (
 
 	"github.com/FireCrackerTeam/wonderjack-web/controllers/authcontroller"
 	"github.com/FireCrackerTeam/wonderjack-web/controllers/redemptioncontroller"
-	"github.com/FireCrackerTeam/wonderjack-web/middlewares"
 	"github.com/FireCrackerTeam/wonderjack-web/models"
 	"github.com/gorilla/mux"
 )
@@ -32,7 +31,7 @@ func main(){
 
 	api := r.PathPrefix("/api").Subrouter()
 	api.HandleFunc("/claim-redemption-code", redemptioncontroller.ClaimRedemtionCode).Methods("POST")
-	api.Use(middlewares.JWTMiddleware)
+	// api.Use(middlewares.JWTMiddleware)
 
 	// log.Fatal(http.ListenAndServe(":80", r))
 	listenAddr := ":80"

@@ -3,8 +3,8 @@ package models
 import (
 	"crypto/rand"
 	// "database/sql"
-    "encoding/hex"
-    "fmt"
+	"encoding/hex"
+	"fmt"
 
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -15,7 +15,7 @@ const codeLength = 10
 
 func ConnectDatabase(){
 	// db, err := gorm.Open(mysql.Open("root:@tcp(localhost:3306)/wonderjack_web"))
-    db, err := gorm.Open(mysql.Open("wondermin:Hafshyuhuy6.@tcp(wonderjack-mysql.mysql.database.azure.com:3306)/wonderjack_web"))
+    db, err := gorm.Open(mysql.Open("wonderja_wondermin:Hafshyuhuy6.@tcp(127.0.0.1:3306)/wonderja_wonderjack_web"))
 	if err != nil {
 		panic(err)
 	}

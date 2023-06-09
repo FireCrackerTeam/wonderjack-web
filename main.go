@@ -33,8 +33,8 @@ func main(){
 	api.HandleFunc("/claim-redemption-code", redemptioncontroller.ClaimRedemtionCode).Methods("POST")
 	// api.Use(middlewares.JWTMiddleware)
 
-	// log.Fatal(http.ListenAndServe(":80", r))
-	listenAddr := ":80"
+	// log.Fatal(http.ListenAndServe(":8090", r))
+	listenAddr := ":8090"
     if val, ok := os.LookupEnv("DB_HOST"); ok {
         listenAddr = ":" + val
     }

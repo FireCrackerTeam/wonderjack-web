@@ -15,7 +15,7 @@ const codeLength = 10
 
 func ConnectDatabase(){
 	// db, err := gorm.Open(mysql.Open("root:@tcp(localhost:3306)/wonderjack_web"))
-    db, err := gorm.Open(mysql.Open("wonderja_wondermin:Hafshyuhuy6.@tcp(127.0.0.1:3306)/wonderja_wonderjack_web"))
+    db, err := gorm.Open(mysql.Open("wonderja_wondermin:Hafshyuhuy6.@tcp(127.0.0.1:3306)/wonderjack_web"))
 	if err != nil {
 		panic(err)
 	}

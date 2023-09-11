@@ -1,0 +1,10 @@
+cmd: ./main
+cwd: /home/wonderja/dev.wonderjackgame.com
+log:
+    file: /home/wonderja/log/go.log
+    age: 86400
+    num: 3
+    size: 10
+    timestamp: true
+wait: 60
+retries: 3

@@ -1,8 +1,9 @@
-CREATE DATABASE  IF NOT EXISTS `wonderjack_web` /*!40100 DEFAULT CHARACTER SET latin1 */;
-USE `wonderjack_web`;
+CREATE DATABASE  IF NOT EXISTS `wonderja_wonderjack_web` /*!40100 DEFAULT CHARACTER SET latin1 
+*/;
+USE `wonderja_wonderjack_web`;
 -- MySQL dump 10.13  Distrib 8.0.33, for macos13 (arm64)
 --
--- Host: wonderjack-mysql.mysql.database.azure.com    Database: wonderjack_web
+-- Host: wonderjack-mysql.mysql.database.azure.com    Database: wonderja_wonderjack_web
 -- ------------------------------------------------------
 -- Server version	5.7.42-log
 
@@ -96,7 +97,7 @@ INSERT INTO `users` VALUES (1,'Hafshy','test1@email3.com','$2a$10$CdWG33nyHh2ZnF
 UNLOCK TABLES;
 
 --
--- Dumping routines for database 'wonderjack_web'
+-- Dumping routines for database 'wonderja_wonderjack_web'
 --
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
